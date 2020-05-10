@@ -1,10 +1,11 @@
 * Description: Achieve more matrix operations comparing to matrix command. See below for some examples.
 * Author: Meiting Wang, Master, School of Economics, South-Central University for Nationalities
 * Email: wangmeiting92@gmail.com
-* Created on May 10, 2020
+* Created on May 9, 2020
 /*
 更新日志：
-2020年5月10日：解决了matmh A = A[1 2,:]之类的bug；添加了矩阵行列名的传递；解决了matmh list A的bug
+2020年5月9日：解决了matmh A = A[1 2,:]之类的bug；添加了矩阵行列名的传递
+2020年5月10日：解决了matmh list A的bug；解决了matmh dir的bug；解决了matmh B[1,1]=3后列示不出矩阵的bug
 */
 
 program define matmh
@@ -158,13 +159,16 @@ local status3 "^`portion'(apd|ape|gpd|gpe)\(\s*`real'\s*,\s*`positive_int'\s*,\s
 
 
 *------------------------------主程序-----------------------------------
-if ustrregexm("`anything'","^(\w+)\s*=.*") {
+if ustrregexm("`anything'","^(\w+)\s*=.*") {  //匹配类似于A = (1,2,3\4,5,6)
 	local mat_name = ustrregexs(1) //获得可能要生成的矩阵名
 }
-else if ustrregexm("`anything'","^\w+\s+(\w+)\s*=.*") {
+else if ustrregexm("`anything'","(\w+)\[\s*\d+\s*,\s*\d+\s*\]\s*=.*") { //匹配类似于A[1,2]=6
 	local mat_name = ustrregexs(1) //获得可能要修改的矩阵名
 }
-
+else if ustrregexm("`anything'","^\w+\s+(\w+)\s*=.*") { //匹配类似于rown A = row1 row2
+	local mat_name = ustrregexs(1) //获得可能要修改的矩阵名
+}
+dis in y "`mat_name'" //后期删除
 
 if ustrregexm("`anything'", "(`situ1')|(`situ2')|(`situ3')|(`situ4')") {    //situ1-situ4情况处理
 	local rmat_name = ustrregexra("`anything'","(^\w+\s*=\s*)|(\[.*\]$)","") //获得旧矩阵名
@@ -478,7 +482,7 @@ else {   //这里将搭载mat运算系统
 if "`displayfmt'" != "" {
 	mat list `mat_name', format(`displayfmt')
 }
-else if ("`ndisplay'" == "")&(~ustrregexm("`anything'","list")) {
+else if ("`ndisplay'" == "")&(~ustrregexm("`anything'","^list\s+\w+$"))&("`mat_name'"!="") {
 	mat list `mat_name'
 }
 
