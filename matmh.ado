@@ -4,7 +4,7 @@
 * Created on May 9, 2020
 /*
 更新日志：
-2020年5月9日：解决了matmh A = A[1 2,:]之类的bug；添加了矩阵行列名的传递
+2020年5月9日：解决了matmh A = A[1 2,:]之类的bug；添加了矩阵行列名的传递 
 2020年5月10日：解决了matmh list A的bug；解决了matmh dir的bug；解决了matmh B[1,1]=3后列示不出矩阵的bug
 2020年5月11日：解决了matmh symeigen X v = test和matmh svd U W V = test后列示不出矩阵的bug
 */

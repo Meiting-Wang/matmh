@@ -1,6 +1,6 @@
 {smcl}
 {right:Updated time: May 11, 2020}
-{* -----------------------------title------------------------------------ *}{...}
+{* -----------------------------title------------------------------------- *}{...}
 {p 0 16 2}
 {bf:[W-6] matmh} {hline 2} Achieve more matrix operations comparing to matrix command. The source code can be gained in {browse "https://github.com/Meiting-Wang/matmh":github}.
 
