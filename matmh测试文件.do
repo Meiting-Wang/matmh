@@ -1,8 +1,8 @@
 pr drop _all
-/*注意：通篇程序没有进入过mata环境*/
-matmh A = (4,6,8,10\10,12,14,16\16,18,20,22\24,26,28,30)
-matmh B = (3,2,2,5\5,6,7,8\8,3,4,11\6,13,14,6)
+matmh drop _all
 
+matmh A = (4,6,8,10\-1,0,1,16\1.2,1.3,1.4,1.5\3.6,-1.6,-1.4,-1.5)
+matmh B = (3,2,2,5\5,6,7,8\8,3,4,11\6,13,14,6)
 
 *1. 从一个矩阵中提取子矩阵
 matmh test = A                         //复制矩阵A
@@ -18,7 +18,7 @@ matmh test = A[1 3 4,1 3 4]            //提取矩阵A第1、3、4行，第1、3
 matmh test = A[1 3 4,1 3 4], nd        //求得矩阵test后不将其展示出来
 matmh test = A[1 3 4,1 3 4], d(%9.3f)  //求得矩阵test后并把其以%9.3f的格式展示出来
 
-*2. 矩阵的点乘、点除、点幂运算
+*2. 矩阵的元素运算
 matmh test = A.+B     //点加
 matmh test = A.-B     //点减
 matmh test = A.*B     //点乘
@@ -47,7 +47,6 @@ matmh test = exp(A)        //求以自然数为底的指数
 matmh test = floor(A)      //求矩阵A的"地板"
 matmh test = round(A)      //求与矩阵A最近的板
 matmh test = ceil(A)       //求与矩阵A的"天花板"
-help mathematical functions  //可以在这里找到常见的Stata内置的数学函数
 
 *5. 矩阵的幂运算
 matmh test = A^2           //2个方阵A相乘(输入的A必须为方阵)
@@ -75,6 +74,24 @@ matmh test = ape(1,5,21)  //生成等差列向量：[1,6,11,16,21]'
 matmh test = gpd(1,6,2)   //生成等比列向量：[1,2,4,8,16,32]'
 matmh test = gpe(1,5,81)  //生成等比列向量：[1,3,9,37,81]'
 
-/*
-除此之外，matmh能运行所有mat能运行的计算(即搭载了mat系统)
-*/
+*7. 可运行所有matrix命令可执行的矩阵运算，如下，但不限于：
+matmh test = A + B
+matmh test = A * B
+matmh test = A # B
+matmh test = A \ B
+matmh test = (A,B)
+matmh test = A / 3
+matmh test = hadamard(A,B)
+matmh test = J(2,3,9)
+matmh test = matuniform(4,5)
+matmh test = trace(A)
+matmh test = rowsof(A)
+matmh A[1,1] = 100
+matmh rown A = row1 row2 row3 row4
+matmh dir
+matmh drop test
+matmh rename A new_A
+matmh list new_A
+matmh test = (6,2,4\2,3,2\4,2,6)
+matmh symeigen X v = test
+matmh svd U W V = test

@@ -6,6 +6,7 @@
 更新日志：
 2020年5月9日：解决了matmh A = A[1 2,:]之类的bug；添加了矩阵行列名的传递
 2020年5月10日：解决了matmh list A的bug；解决了matmh dir的bug；解决了matmh B[1,1]=3后列示不出矩阵的bug
+2020年5月11日：解决了matmh symeigen X v = test和matmh svd U W V = test后列示不出矩阵的bug
 */
 
 program define matmh
@@ -14,9 +15,8 @@ version 15.1
 syntax anything(equalok id="matrix operation expression") [, Display Displayfmt(string) NDisplay]
 /*
 注意：通篇程序没有进入过mata环境
-mat A = (4,6,8,10\10,12,14,16\16,18,20,22\24,26,28,30)
-mat B = (3,2,2,5\5,6,7,8\8,3,4,11\6,13,14,6)
-
+matmh A = (4,6,8,10\-1,0,1,16\1.2,1.3,1.4,1.5\3.6,-1.6,-1.4,-1.5)
+matmh B = (3,2,2,5\5,6,7,8\8,3,4,11\6,13,14,6)
 
 *1. 从一个矩阵中提取子矩阵
 matmh test = A                         //复制矩阵A
@@ -32,7 +32,7 @@ matmh test = A[1 3 4,1 3 4]            //提取矩阵A第1、3、4行，第1、3
 matmh test = A[1 3 4,1 3 4], nd        //求得矩阵test后不将其展示出来
 matmh test = A[1 3 4,1 3 4], d(%9.3f)  //求得矩阵test后并把其以%9.3f的格式展示出来
 
-*2. 矩阵的点乘、点除、点幂运算
+*2. 矩阵的元素运算
 matmh test = A.+B     //点加
 matmh test = A.-B     //点减
 matmh test = A.*B     //点乘
@@ -89,8 +89,27 @@ matmh test = ape(1,5,21)  //生成等差列向量：[1,6,11,16,21]'
 matmh test = gpd(1,6,2)   //生成等比列向量：[1,2,4,8,16,32]'
 matmh test = gpe(1,5,81)  //生成等比列向量：[1,3,9,37,81]'
 
-
-除此之外，matmh能运行所有mat能运行的计算(即搭载了mat系统)
+*7. 可运行所有matrix命令可执行的矩阵运算，如下，但不限于：
+matmh test = A + B
+matmh test = A * B
+matmh test = A # B
+matmh test = A \ B
+matmh test = (A,B)
+matmh test = A / 3
+matmh test = hadamard(A,B)
+matmh test = J(2,3,9)
+matmh test = matuniform(4,5)
+matmh test = trace(A)
+matmh test = rowsof(A)
+matmh A[1,1] = 100
+matmh rown A = row1 row2 row3 row4
+matmh dir
+matmh drop test
+matmh rename A new_A
+matmh list new_A
+matmh test = (6,2,4\2,3,2\4,2,6)
+matmh symeigen X v = test
+matmh svd U W V = test
 */
 
 
@@ -110,6 +129,11 @@ if "`displayfmt'" != "" {
 		dis "{error:wrong numeric format}"
 		exit
 	}
+}
+
+if (ustrregexm("`anything'","^list\s+\w+$"))&("`ndisplay'"!="") {
+	dis "{error:list and ndisplay cannot exist at the same time}"
+	exit
 }
 
 *----------------设定单纯的mat语句不能实现的矩阵运算类型------------------------
@@ -159,16 +183,24 @@ local status3 "^`portion'(apd|ape|gpd|gpe)\(\s*`real'\s*,\s*`positive_int'\s*,\s
 
 
 *------------------------------主程序-----------------------------------
-if ustrregexm("`anything'","^(\w+)\s*=.*") {  //匹配类似于A = (1,2,3\4,5,6)
+if ustrregexm("`anything'","^(\w+)\s*=.+") {  //匹配类似于A = (1,2,3\4,5,6)
 	local mat_name = ustrregexs(1) //获得可能要生成的矩阵名
 }
-else if ustrregexm("`anything'","(\w+)\[\s*\d+\s*,\s*\d+\s*\]\s*=.*") { //匹配类似于A[1,2]=6
+else if ustrregexm("`anything'","^(\w+)\[\s*\d+\s*,\s*\d+\s*\]\s*=.+") { //匹配类似于A[1,2]=6
 	local mat_name = ustrregexs(1) //获得可能要修改的矩阵名
 }
-else if ustrregexm("`anything'","^\w+\s+(\w+)\s*=.*") { //匹配类似于rown A = row1 row2
+else if ustrregexm("`anything'","^\w+\s+(\w+)\s*=.+") { //匹配类似于rown A = row1 row2
 	local mat_name = ustrregexs(1) //获得可能要修改的矩阵名
 }
-dis in y "`mat_name'" //后期删除
+else if ustrregexm("`anything'","^\w+\s+(\w+)\s+(\w+)\s*=.+") { //匹配类似于symeigen X v = A
+	local mat_name1 = ustrregexs(1)
+	local mat_name2 = ustrregexs(2)
+}
+else if ustrregexm("`anything'","^\w+\s+(\w+)\s+(\w+)\s+(\w+)\s*=.+") { //匹配类似于symeigen X v = A
+	local mat_name1 = ustrregexs(1)
+	local mat_name2 = ustrregexs(2)
+	local mat_name3 = ustrregexs(3)
+}
 
 if ustrregexm("`anything'", "(`situ1')|(`situ2')|(`situ3')|(`situ4')") {    //situ1-situ4情况处理
 	local rmat_name = ustrregexra("`anything'","(^\w+\s*=\s*)|(\[.*\]$)","") //获得旧矩阵名
@@ -478,12 +510,37 @@ else {   //这里将搭载mat运算系统
 	mat `anything'
 }
 
-
-if "`displayfmt'" != "" {
-	mat list `mat_name', format(`displayfmt')
-}
-else if ("`ndisplay'" == "")&(~ustrregexm("`anything'","^list\s+\w+$"))&("`mat_name'"!="") {
-	mat list `mat_name'
+if "`ndisplay'" == "" {
+	if "`mat_name3'" != "" {
+		if "`displayfmt'" != "" {
+			mat list `mat_name1', format(`displayfmt')
+			mat list `mat_name2', format(`displayfmt')
+			mat list `mat_name3', format(`displayfmt')
+		}
+		else {
+			mat list `mat_name1'
+			mat list `mat_name2'
+			mat list `mat_name3'
+		}
+	}
+	else if "`mat_name2'" != "" {
+		if "`displayfmt'" != "" {
+			mat list `mat_name1', format(`displayfmt')
+			mat list `mat_name2', format(`displayfmt')
+		}
+		else {
+			mat list `mat_name1'
+			mat list `mat_name2'
+		}
+	}
+	else if "`mat_name'" != "" {
+		if "`displayfmt'" != "" {
+			mat list `mat_name', format(`displayfmt')
+		}
+		else {
+			mat list `mat_name'
+		}
+	}
 }
 
 end
