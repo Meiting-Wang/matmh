@@ -74,7 +74,7 @@ matmh test = ape(1,5,21)  //生成等差列向量：[1,6,11,16,21]'
 matmh test = gpd(1,6,2)   //生成等比列向量：[1,2,4,8,16,32]'
 matmh test = gpe(1,5,81)  //生成等比列向量：[1,3,9,37,81]'
 
-*7. 可运行所有matrix命令可执行的矩阵运算，如下，但不限于：
+*7. 可执行所有matrix命令可执行的矩阵运算，如下，但不限于：
 matmh test = A + B
 matmh test = A * B
 matmh test = A # B
