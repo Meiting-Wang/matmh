@@ -187,7 +187,7 @@ matmh svd U W V = test
 ```
 
 > 以上所有实例都可以在`help matmh`中直接运行。  
-> ![image](https://user-images.githubusercontent.com/42256486/81644315-11833380-945a-11ea-87fa-d20531543ad7.png)
+> ![](https://imgkr.cn-bj.ufileos.com/bdbab909-00cb-491a-b303-11e54b23de1b.png)
 
 ## 五、命令运行展示
 
@@ -345,8 +345,8 @@ matmh test = log10(A)      //求以10为底的对数
 matmh test = abs(A)        //求绝对值
 matmh test = exp(A)        //求以自然数为底的指数
 matmh test = floor(A)      //求矩阵A的"地板"
-matmh test = round(A)      //求与矩阵A最近的板
-matmh test = ceil(A)       //求与矩阵A的"天花板"
+matmh test = round(A)      //求与矩阵A最近的"板"
+matmh test = ceil(A)       //求矩阵A的"天花板"
 
 *5. 矩阵的幂运算
 matmh test = A^2           //2个方阵A相乘(输入的A必须为方阵)
