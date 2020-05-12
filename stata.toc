@@ -1,0 +1,8 @@
+v v1.0.0
+d Materials by Meiting Wang
+d South-Central University for Nationalities
+d wangmeiting92@gmail.com
+
+d 'matmh': Achieve more matrix operations comparing to matrix command
+
+p matmh

@@ -1,0 +1,10 @@
+v v1.0.0
+d 'MATMH': matmh
+d 
+d Achieve more matrix operations comparing to matrix command
+d 
+d Distribution-Date:   20200512
+d License: MIT
+d 
+F matmh.ado
+F matmh.sthlp
