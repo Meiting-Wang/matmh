@@ -124,8 +124,8 @@ matmh test = log10(A)      //求以10为底的对数
 matmh test = abs(A)        //求绝对值
 matmh test = exp(A)        //求以自然数为底的指数
 matmh test = floor(A)      //求矩阵A的"地板"
-matmh test = round(A)      //求与矩阵A最近的板
-matmh test = ceil(A)       //求与矩阵A的"天花板"
+matmh test = round(A)      //求与矩阵A最近的"版"
+matmh test = ceil(A)       //求矩阵A的"天花板"
 ```
 
 > 更多的数学函数，可以`help mathematical functions`
