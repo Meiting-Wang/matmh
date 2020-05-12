@@ -488,7 +488,7 @@ else if ustrregexm("`anything'", "(`status1')|(`status2')|(`status3')") {
 				}
 				if `delta_or_end_num'/`begin_num'<0 {
 					if ~mod(`quantity_of_numbers'-1,2) {
-						dis "{error:the number of end_num/begin_num cannot be a radical}"
+						dis "{error:end_num/begin_num cannot be negative in this case}"
 						exit
 					}
 					else {
