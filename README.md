@@ -187,7 +187,7 @@ matmh svd U W V = test
 ```
 
 > 以上所有实例都可以在`help matmh`中直接运行。  
-> ![](https://imgkr.cn-bj.ufileos.com/bdbab909-00cb-491a-b303-11e54b23de1b.png)
+> ![image](https://user-images.githubusercontent.com/42256486/81644315-11833380-945a-11ea-87fa-d20531543ad7.png)
 
 ## 五、命令运行展示
 
