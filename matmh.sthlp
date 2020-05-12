@@ -123,7 +123,7 @@ where the subcommands can be :
 . {stata "matmh test = gpd(1,6,2)"}{break}
 . {stata "matmh test = gpe(1,5,81)"}{p_end}
 
-{p 4 4 2}This command can run all the matrix operations that {help matrix} can execute, like, but not limited to:{p_end}
+{p 4 4 2}Including what {help matrix} can do, like, but not limited to:{p_end}
 {p 8 8 2}. {stata "matmh test = A + B"}{break}
 . {stata "matmh test = A * B"}{break}
 . {stata "matmh test = A # B"}{break}
