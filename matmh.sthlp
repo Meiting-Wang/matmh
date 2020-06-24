@@ -151,8 +151,8 @@ where the subcommands can be :
 
 {p 4 4 2}
 Meiting Wang{break}
-School of Economics, South-Central University for Nationalities{break}
-Wuhan, China{break}
+Institute for Economic and Social Research, Jinan University{break}
+Guangzhou, China{break}
 wangmeiting92@gmail.com
 
 
