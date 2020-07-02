@@ -131,7 +131,7 @@ if "`displayfmt'" != "" {
 	}
 }
 
-if (ustrregexm("`anything'","^list\s+\w+$"))&("`ndisplay'"!="") {
+if (ustrregexm(`"`anything'"',"^list\s+\w+$"))&("`ndisplay'"!="") {
 	dis "{error:list and ndisplay cannot exist at the same time}"
 	exit
 }
