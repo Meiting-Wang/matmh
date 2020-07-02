@@ -183,30 +183,30 @@ local status3 "^`portion'(apd|ape|gpd|gpe)\(\s*`real'\s*,\s*`positive_int'\s*,\s
 
 
 *------------------------------主程序-----------------------------------
-if ustrregexm("`anything'","^(\w+)\s*=.+") {  //匹配类似于A = (1,2,3\4,5,6)
+if ustrregexm(`"`anything'"',"^(\w+)\s*=.+") {  //匹配类似于A = (1,2,3\4,5,6)
 	local mat_name = ustrregexs(1) //获得可能要生成的矩阵名
 }
-else if ustrregexm("`anything'","^(\w+)\[\s*\d+\s*,\s*\d+\s*\]\s*=.+") { //匹配类似于A[1,2]=6
+else if ustrregexm(`"`anything'"',"^(\w+)\[\s*\d+\s*,\s*\d+\s*\]\s*=.+") { //匹配类似于A[1,2]=6
 	local mat_name = ustrregexs(1) //获得可能要修改的矩阵名
 }
-else if ustrregexm("`anything'","^\w+\s+(\w+)\s*=.+") { //匹配类似于rown A = row1 row2
+else if ustrregexm(`"`anything'"',"^\w+\s+(\w+)\s*=.+") { //匹配类似于rown A = row1 row2
 	local mat_name = ustrregexs(1) //获得可能要修改的矩阵名
 }
-else if ustrregexm("`anything'","^\w+\s+(\w+)\s+(\w+)\s*=.+") { //匹配类似于symeigen X v = A
+else if ustrregexm(`"`anything'"',"^\w+\s+(\w+)\s+(\w+)\s*=.+") { //匹配类似于symeigen X v = A
 	local mat_name1 = ustrregexs(1)
 	local mat_name2 = ustrregexs(2)
 }
-else if ustrregexm("`anything'","^\w+\s+(\w+)\s+(\w+)\s+(\w+)\s*=.+") { //匹配类似于symeigen X v = A
+else if ustrregexm(`"`anything'"',"^\w+\s+(\w+)\s+(\w+)\s+(\w+)\s*=.+") { //匹配类似于symeigen X v = A
 	local mat_name1 = ustrregexs(1)
 	local mat_name2 = ustrregexs(2)
 	local mat_name3 = ustrregexs(3)
 }
 
-if ustrregexm("`anything'", "(`situ1')|(`situ2')|(`situ3')|(`situ4')") {    //situ1-situ4情况处理
-	local rmat_name = ustrregexra("`anything'","(^\w+\s*=\s*)|(\[.*\]$)","") //获得旧矩阵名
+if ustrregexm(`"`anything'"', "(`situ1')|(`situ2')|(`situ3')|(`situ4')") {    //situ1-situ4情况处理
+	local rmat_name = ustrregexra(`"`anything'"',"(^\w+\s*=\s*)|(\[.*\]$)","") //获得旧矩阵名
 
-	local part1_st = ustrregexra("`anything'","(`part'\[\s*)|(\s*,.*)","")
-	local part2_st = ustrregexra("`anything'","(.*,\s*)|(\s*\])","")
+	local part1_st = ustrregexra(`"`anything'"',"(`part'\[\s*)|(\s*,.*)","")
+	local part2_st = ustrregexra(`"`anything'"',"(.*,\s*)|(\s*\])","")
 	
 	forvalues i = 1/2 {
 		if ustrregexm("`part`i'_st'", "^\:\s*\d+$") {
@@ -231,10 +231,10 @@ if ustrregexm("`anything'", "(`situ1')|(`situ2')|(`situ3')|(`situ4')") {    //si
 	
 	
 	tempname temp xx //设置临时性的矩阵名
-	if ustrregexm("`anything'", "`situ1'") {
+	if ustrregexm(`"`anything'"', "`situ1'") {
 		mat `mat_name' = `rmat_name'[`part1_st',`part2_st']
 	} //situ1
-	else if ustrregexm("`anything'", "`situ2'") {
+	else if ustrregexm(`"`anything'"', "`situ2'") {
 		mat `temp' = `rmat_name'[`part1_st',1]
 		local rowna: rownames `temp'  //提取行名
 		local mat_rows = rowsof(`temp') //获得新矩阵的行数
@@ -258,7 +258,7 @@ if ustrregexm("`anything'", "(`situ1')|(`situ2')|(`situ3')|(`situ4')") {    //si
 		mat rownames `mat_name' = `rowna'
 		mat colnames `mat_name' = `colna'
 	} //situ2
-	else if ustrregexm("`anything'", "`situ3'") {
+	else if ustrregexm(`"`anything'"', "`situ3'") {
 		mat `temp' = `rmat_name'[1,`part2_st']
 		local colna: colnames `temp'  //提取列名
 		local mat_rows: word count `part1_st' //获得新矩阵的行数
@@ -281,7 +281,7 @@ if ustrregexm("`anything'", "(`situ1')|(`situ2')|(`situ3')|(`situ4')") {    //si
 		mat rownames `mat_name' = `rowna'
 		mat colnames `mat_name' = `colna'
 	}
-	else if ustrregexm("`anything'", "`situ4'") {
+	else if ustrregexm(`"`anything'"', "`situ4'") {
 		local mat_rows: word count `part1_st' //获得新矩阵的行数
 		local mat_cols: word count `part2_st' //获得新矩阵的列数
 		mat `temp' = J(`mat_rows',`mat_cols',.) 
@@ -324,9 +324,9 @@ if ustrregexm("`anything'", "(`situ1')|(`situ2')|(`situ3')|(`situ4')") {    //si
 		mat colnames `mat_name' = `colna'
 	}
 }
-else if ustrregexm("`anything'", "(`case1')|(`case2')|(`case3')|(`case4')") { // case1-case4情况处理
+else if ustrregexm(`"`anything'"', "(`case1')|(`case2')|(`case3')|(`case4')") { // case1-case4情况处理
 	tempname temp //设置临时性的矩阵名
-	if ustrregexm("`anything'", "`case1'") {     
+	if ustrregexm(`"`anything'"', "`case1'") {     
 		local rmat_name1 = ustrregexs(3)  //旧矩阵名1
 		local operator = ustrregexs(4)    //运算符
 		local rmat_name2 = ustrregexs(5)  //旧矩阵名2  
@@ -353,7 +353,7 @@ else if ustrregexm("`anything'", "(`case1')|(`case2')|(`case3')|(`case4')") { //
 		mat rownames `mat_name' = `rowna'
 		mat colnames `mat_name' = `colna'
 	}
-	else if ustrregexm("`anything'", "`case2'") {
+	else if ustrregexm(`"`anything'"', "`case2'") {
 		local operator = ustrregexs(3)    //运算符
 		local rmat_name = ustrregexs(4)  //旧矩阵名 
 		
@@ -372,7 +372,7 @@ else if ustrregexm("`anything'", "(`case1')|(`case2')|(`case3')|(`case4')") { //
 		mat rownames `mat_name' = `rowna'
 		mat colnames `mat_name' = `colna'
 	}
-	else if ustrregexm("`anything'", "`case3'") {
+	else if ustrregexm(`"`anything'"', "`case3'") {
 		local fun_name = ustrregexs(2)    //运算符
 		local rmat_name = ustrregexs(3)  //旧矩阵名 
 		
@@ -401,7 +401,7 @@ else if ustrregexm("`anything'", "(`case1')|(`case2')|(`case3')|(`case4')") { //
 			mat colnames `mat_name' = `colna'
 		}
 	}
-	else if ustrregexm("`anything'", "`case4'") {  //这里不能写成else {  },因为后面需要引用ustrregexm()的分组结果
+	else if ustrregexm(`"`anything'"', "`case4'") {  //这里不能写成else {  },因为后面需要引用ustrregexm()的分组结果
 		local rmat_name = ustrregexs(2)  //旧矩阵名 
 		local power = ustrregexs(5)    //矩阵的幂
 		
@@ -420,8 +420,8 @@ else if ustrregexm("`anything'", "(`case1')|(`case2')|(`case3')|(`case4')") { //
 		}
 	}
 }
-else if ustrregexm("`anything'", "(`status1')|(`status2')|(`status3')") {
-	if ustrregexm("`anything'", "`status1'") { 
+else if ustrregexm(`"`anything'"', "(`status1')|(`status2')|(`status3')") {
+	if ustrregexm(`"`anything'"', "`status1'") { 
 		local num1 = ustrregexs(2)
 		local num2 = ustrregexs(6)
 		if ~(`num1'<=`num2') {
@@ -438,7 +438,7 @@ else if ustrregexm("`anything'", "(`status1')|(`status2')|(`status3')") {
 			}
 		}
 	}
-	else if ustrregexm("`anything'", "`status2'") { 
+	else if ustrregexm(`"`anything'"', "`status2'") { 
 		local num1 = ustrregexs(2)
 		local delta = ustrregexs(6)
 		local num2 = ustrregexs(9)
@@ -456,7 +456,7 @@ else if ustrregexm("`anything'", "(`status1')|(`status2')|(`status3')") {
 			}
 		}
 	}
-	else if ustrregexm("`anything'", "`status3'") { //这里不能写成else {  },因为后面需要引用ustrregexm()的分组结果
+	else if ustrregexm(`"`anything'"', "`status3'") { //这里不能写成else {  },因为后面需要引用ustrregexm()的分组结果
 		local function = ustrregexs(2)
 		local begin_num = ustrregexs(3)
 		local quantity_of_numbers = ustrregexs(7)
