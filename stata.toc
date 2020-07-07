@@ -1,4 +1,4 @@
-v v1.0.0
+v 1.0.0
 d Materials by Meiting Wang
 d South-Central University for Nationalities
 d wangmeiting92@gmail.com

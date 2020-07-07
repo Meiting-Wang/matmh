@@ -1,10 +1,9 @@
-v v1.0.0
-d 'MATMH': matmh
-d 
-d Achieve more matrix operations comparing to matrix command
-d 
-d Distribution-Date:   20200512
-d License: MIT
-d 
-F matmh.ado
-F matmh.sthlp
+v 1.0.0
+d matmh. Achieve more matrix operations comparing to matrix command
+d Meiting Wang
+d Institute for Economic and Social Research, Jinan University
+d Guangzhou, China
+d wangmeiting92@gmail.com
+
+f matmh.ado
+f matmh.sthlp
