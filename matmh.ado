@@ -1,5 +1,5 @@
-* Description: Achieve more matrix operations comparing to matrix command. See below for some examples.
-* Author: Meiting Wang, Master, School of Economics, South-Central University for Nationalities
+* Description: Achieve more matrix operations comparing to matrix command
+* Author: Meiting Wang, doctor, Institute for Economic and Social Research, Jinan University
 * Email: wangmeiting92@gmail.com
 * Created on May 9, 2020
 /*
